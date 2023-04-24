@@ -1,4 +1,5 @@
 const {User, Thought} = require("../models")
+ const mongoose = require('mongoose');
 const userController = {
     getUsers(req, res) {
         User.find()
@@ -69,22 +70,40 @@ const userController = {
       },
 
       //add a friend
-      addFriend({ params }, res) {
-        User.findOneAndUpdate(
-          { _id: params.userId },
-          { $addToSet: { friends: params.friendId } },
-          { new: true, runValidators: true }
-        )
-          .then((dbUserData) => {
-            if (!dbUserData) {
-              res.status(404).json({ message: "No user with this id" });
-              return;
-            }
-            res.json(dbUserData);
-          })
-          .catch((err) => res.json(err));
-      },
+    
+      // addFriend({ params }, res) {
+      //   User.findOneAndUpdate(
+      //     { _id: params.userId },
+      //     { $addToSet: { friends: params.friendId } },
+      //     { new: true, runValidators: true }
+      //   )
+      //     .then((dbUserData) => {
+      //       if (!dbUserData) {
+      //         res.status(404).json({ message: "No user with this id" });
+      //         return;
+      //       }
+      //       res.json(dbUserData);
+      //     })
+      //     .catch((err) => res.json(err));
+      // },
+      // const mongoose = require('mongoose');
 
+addFriend({ params }, res) {
+  const userId = mongoose.Types.ObjectId(params.userId);
+  User.findOneAndUpdate(
+    { _id: userId },
+    { $addToSet: { friends: params.friendId } },
+    { new: true, runValidators: true }
+  )
+  .then((dbUserData) => {
+    if (!dbUserData) {
+      res.status(404).json({ message: "No user with this id" });
+      return;
+    }
+    res.json(dbUserData);
+  })
+  .catch((err) => res.json(err));
+},
       //delete a friend
       removeFriend({ params }, res) {
         User.findOneAndUpdate(

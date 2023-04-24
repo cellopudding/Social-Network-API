@@ -2,14 +2,7 @@ const {User, Thought} = require("../models")
 
 
 const thoughtController = {
-    // getThoughts,
-    // getSingleThought,
-    // createThought,
-    // updateThought,
-    // deleteThought,
-    // addReaction,
-    // removeReaction,
-
+    
     //get all thoughts 
     getThoughts(req, res) {
         Thought.find({})
