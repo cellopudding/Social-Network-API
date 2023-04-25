@@ -53,40 +53,27 @@ const userController = {
       },
 
       //delete user 
-      deleteUser({ params }, res) {
-        User.findOneAndDelete({ _id: params.id })
-          .then((dbUserData) => {
-            if (!dbUserData) {
+      deleteUser(req, res) {
+        User.findOneAndDelete({ _id: req.params.userId })
+          .then((user) => {
+            if (!user) {
               return res.status(404).json({ message: "No user with this id!" });
             }
-            //delete associated thoughts?
-
-            return Thought.deleteMany({ _id: { $in: dbUserData.thoughts } });
+            return Thought.deleteMany({ _id: { $in: user.thoughts } });
           })
           .then(() => {
             res.json({ message: "User and associated thoughts deleted!" });
           })
-          .catch((err) => res.json(err));
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
       },
+      
 
       //add a friend
     
-      // addFriend({ params }, res) {
-      //   User.findOneAndUpdate(
-      //     { _id: params.userId },
-      //     { $addToSet: { friends: params.friendId } },
-      //     { new: true, runValidators: true }
-      //   )
-      //     .then((dbUserData) => {
-      //       if (!dbUserData) {
-      //         res.status(404).json({ message: "No user with this id" });
-      //         return;
-      //       }
-      //       res.json(dbUserData);
-      //     })
-      //     .catch((err) => res.json(err));
-      // },
-      // const mongoose = require('mongoose');
+      
 
 addFriend({ params }, res) {
   const userId = mongoose.Types.ObjectId(params.userId);
