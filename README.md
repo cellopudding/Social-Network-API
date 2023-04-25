@@ -13,8 +13,7 @@ handle the large amounts of unstructured data needed for their website.
 
 **Demo:**
 
-
-https://user-images.githubusercontent.com/117662089/216411172-8caac516-760a-4f90-bbe0-7f76d5632616.mp4
+<img src= "images\socialmediamongogif.gif">
 
 
 
