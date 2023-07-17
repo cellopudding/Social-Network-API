@@ -1,4 +1,4 @@
-# Challenge18-MongoDB 
+# Social-Network-API
 ## Description 
 
 **User Story:**\
